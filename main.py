@@ -2,16 +2,16 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from pymongo import MongoClient
 
-# Initialize FastAPI
+
 app = FastAPI()
 
-# Connect to MongoDB (replace credentials with yours)
+# Connect to MongoDB 
 client = MongoClient(
-    "mongodb+srv://Sagato:AKKfvzQZ18ZTYKGn@cluster0.8tyqkcr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    "mongodb+srv://<db_username>:<db_password>@cluster0.8tyqkcr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 )
 
 
-# Use your new database
+
 db = client["fraud_detection"]
 blocked_merchants = db["blocked_merchants"]
 
@@ -33,7 +33,6 @@ def process_transaction(txn: Transaction):
             "upi_id": txn.upi_id
         }
     
-    # Otherwise approve
     return {
         "status": "approved",
         "upi_id": txn.upi_id,
